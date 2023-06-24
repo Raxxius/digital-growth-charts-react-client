@@ -51,6 +51,7 @@ function MeasurementSegment() {
   const [errorModal, setErrorModal] = useState(InitalErrorModalState());
   const { globalState, makeGlobalStateUpdater } = useGlobalState();
   const [clinician, setClinician] = useState(true);
+  const [showCentileLabels, setShowCentileLabels] = useState(false);
 
   const {
     mode,
@@ -328,6 +329,7 @@ function MeasurementSegment() {
               isLoading={isLoading}
               chartType="centile"
               clinicianFocus={clinician}
+              showCentileLabels={showCentileLabels}
             />
           </Tab.Pane>
         ) : (
@@ -446,8 +448,8 @@ function MeasurementSegment() {
                 </div>
               )}
               <Grid verticalAlign="middle">
-                <Grid.Row columns={3}>
-                  <Grid.Column textAlign="left" width={4}>
+                <Grid.Row columns={4}>
+                  <Grid.Column textAlign="left" width={3}>
                     <Checkbox
                       radio
                       label="Clinician Advice"
@@ -465,10 +467,23 @@ function MeasurementSegment() {
                       onChange={(e, data) => setClinician(!clinician)}
                     />
                   </Grid.Column>
+                  <Grid.Column width={3}>
+                    {centile && (
+                      <Checkbox
+                        slider
+                        label="Show centile labels"
+                        name="showCentileLabelsToggle"
+                        checked={showCentileLabels}
+                        onChange={(e, data) =>
+                          setShowCentileLabels(!showCentileLabels)
+                        }
+                      />
+                    )}
+                  </Grid.Column>
                   <Grid.Column textAlign="center" width={4}>
                     <ThemeSelection />
                   </Grid.Column>
-                  <Grid.Column textAlign="right" width={8}>
+                  <Grid.Column textAlign="right" width={6}>
                     <Button
                       onClick={handleCentileSDS}
                       color="black"
